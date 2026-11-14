@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bugeon Park · Links</title>
+<meta name="description" content="Bugeon Park — 풀스택 AI 개발자, Team PJ CTO">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta property="og:title" content="Bugeon Park">
+<meta property="og:description" content="풀스택 AI 개발자 · Team PJ CTO">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* VOICE: 조용하고 정확한 개발자 명함
+   IDEA: 잘 인쇄된 흰 명함 한 장, 그 아래 링크가 목록처럼 이어짐
+   PICTURE: 굵은 모노그램 B 원형 마크
+   COLOUR and TYPE: 흰 배경·검은 글자, 다크는 반전 / Inter
+   LAYOUT: 480px 단일 컬럼, 중앙 정렬 */
+:root{color-scheme:light dark;--bg:light-dark(#fff,#0b0b0c);--ink:light-dark(#0a0a0a,#f4f4f5);--mute:light-dark(#6b6b70,#9a9aa2);--line:light-dark(#e6e6e8,#26262a);--hov:light-dark(#f5f5f6,#16161a)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Inter,system-ui,-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;overflow-x:clip;-webkit-font-smoothing:antialiased}
+main{max-width:480px;margin:0 auto;padding:clamp(40px,8vw,72px) 20px 48px}
+.mark{width:96px;height:96px;margin:0 auto 20px;display:block}
+h1{font-size:32px;line-height:1.05;margin:0 0 8px;text-align:center;font-weight:700;letter-spacing:-.02em;text-wrap:balance}
+.bio{margin:0 0 4px;text-align:center;color:var(--mute)}
+.loc{margin:0 0 32px;text-align:center;color:var(--mute);font-size:14px}
+ul{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.row{display:flex;align-items:center;gap:8px}
+a.l{flex:1;display:flex;align-items:center;gap:14px;min-height:60px;padding:12px 16px;border:1px solid var(--line);border-radius:14px;color:inherit;text-decoration:none;transition:background .15s,border-color .15s,transform .15s}
+a.l:hover{background:var(--hov);border-color:var(--ink)}
+a.l:active{transform:scale(.99)}
+a.l:focus-visible,button:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+a.l svg{width:22px;height:22px;flex:none}
+.t{display:flex;flex-direction:column;line-height:1.3}
+.t b{font-weight:600}
+.t small{color:var(--mute);font-size:13px}
+button{width:44px;height:44px;flex:none;border:1px solid var(--line);border-radius:12px;background:none;color:var(--mute);cursor:pointer;display:grid;place-items:center}
+button:hover{color:var(--ink);border-color:var(--ink)}
+button svg{width:18px;height:18px}
+footer{margin-top:40px;text-align:center;color:var(--mute);font-size:13px}
+#toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,20px);opacity:0;background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:999px;font-size:14px;transition:.2s;pointer-events:none}
+#toast.on{opacity:1;transform:translate(-50%,0)}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<main>
+<svg class="mark" viewBox="0 0 96 96" aria-hidden="true"><circle cx="48" cy="48" r="47" fill="currentColor"/><text x="48" y="64" text-anchor="middle" font-family="Inter,sans-serif" font-weight="700" font-size="46" fill="var(--bg)">B</text></svg>
+<h1>Bugeon Park</h1>
+<p class="bio">풀스택 AI 개발자 · Team PJ CTO</p>
+<p class="loc">Busan, Korea</p>
+<ul id="list"></ul>
+<footer>© <span id="y"></span> Bugeon Park</footer>
+</main>
+<div id="toast" role="status" aria-live="polite"></div>
+<script>
+{
+// 링크 추가·수정은 이 배열만 고치면 됨
+const L=[
+ {n:'GitHub',d:'@Bugeon151',u:'https://github.com/Bugeon151',i:'gh'},
+ {n:'Team PJ',d:'github.com/TEAM-PJ-LAB',u:'https://github.com/TEAM-PJ-LAB',i:'org'},
+ {n:'LinkedIn',d:'Bugeon Park',u:'https://www.linkedin.com/in/bugeon-park-3b58433a9',i:'in'},
+ {n:'Instagram',d:'@bugeon.dev',u:'https://www.instagram.com/bugeon.dev',i:'ig'},
+ // {n:'Portfolio',d:'포트폴리오',u:'https://',i:'web'},
+ // {n:'YouTube',d:'채널',u:'https://',i:'yt'},
+];
+const I={
+ gh:'<path fill="currentColor" d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.42-2.69 5.39-5.26 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5Z"/>',
+ org:'<g fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></g>',
+ in:'<path fill="currentColor" d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13ZM7.12 20.45H3.56V9h3.56v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0Z"/>',
+ ig:'<g fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".6" fill="currentColor"/></g>',
+ yt:'<path fill="currentColor" d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8ZM9.6 15.6V8.4l6.3 3.6-6.3 3.6Z"/>',
+ web:'<g fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.5 3.5 5.5 3.5 9s-1 6.5-3.5 9c-2.5-2.5-3.5-5.5-3.5-9s1-6.5 3.5-9Z"/></g>'
+};
+const cp='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"/></svg>';
+const $=id=>document.getElementById(id),t=$('toast');let h;
+$('list').innerHTML=L.map((x,k)=>`<li class="row"><a class="l" href="${x.u}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true">${I[x.i]}</svg><span class="t"><b>${x.n}</b><small>${x.d}</small></span></a><button data-k="${k}" aria-label="${x.n} 링크 복사">${cp}</button></li>`).join('');
+const msg=s=>{t.textContent=s;t.classList.add('on');clearTimeout(h);h=setTimeout(()=>t.classList.remove('on'),1600)};
+$('list').addEventListener('click',async e=>{const b=e.target.closest('button');if(!b)return;try{await navigator.clipboard.writeText(L[b.dataset.k].u);msg('링크를 복사했어요')}catch{msg(L[b.dataset.k].u)}});
+$('y').textContent=new Date().getFullYear();
+}
+</script>
+</body>
+</html>
